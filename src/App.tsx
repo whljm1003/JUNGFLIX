@@ -1,25 +1,26 @@
-import React from 'react';
-import logo from './logo.svg';
-import './App.css';
+import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
+import Home from "./Routes/Home";
+import Search from "./Routes/Search";
+import Tv from "./Routes/Tv";
+import Header from "./Components/Header";
 
 function App() {
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.tsx</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <Router>
+      <Header />
+      <Switch>
+        <Route path="/tv">
+          <Tv />
+        </Route>
+        <Route path="/search">
+          <Search />
+        </Route>
+        {/* path => []  2개의 path 필요할 때 사용 */}
+        <Route path={["/", "/movies/:movieId"]}>
+          <Home />
+        </Route>
+      </Switch>
+    </Router>
   );
 }
 

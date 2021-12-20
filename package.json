@@ -1,5 +1,5 @@
 {
-  "name": "noflix",
+  "name": "jungflix",
   "version": "0.1.0",
   "private": true,
   "dependencies": {
@@ -10,9 +10,16 @@
     "@types/node": "^16.11.14",
     "@types/react": "^17.0.37",
     "@types/react-dom": "^17.0.11",
+    "framer-motion": "^5.5.5",
     "react": "^17.0.2",
     "react-dom": "^17.0.2",
+    "react-hook-form": "^7.22.2",
+    "react-icons": "^4.3.1",
+    "react-query": "^3.34.5",
+    "react-router-dom": "^5.3.0",
     "react-scripts": "5.0.0",
+    "recoil": "^0.5.2",
+    "styled-components": "^5.3.3",
     "typescript": "^4.5.4",
     "web-vitals": "^2.1.2"
   },
@@ -20,7 +27,9 @@
     "start": "react-scripts start",
     "build": "react-scripts build",
     "test": "react-scripts test",
-    "eject": "react-scripts eject"
+    "eject": "react-scripts eject",
+    "deploy": "gh-pages -d build",
+    "predeploy": "npm run build"
   },
   "eslintConfig": {
     "extends": [
@@ -39,5 +48,10 @@
       "last 1 firefox version",
       "last 1 safari version"
     ]
-  }
+  },
+  "devDependencies": {
+    "@types/react-router-dom": "^5.3.2",
+    "@types/styled-components": "^5.1.18"
+  },
+  "homepage": "https://whljm1003.github.io/jung_flix"
 }
