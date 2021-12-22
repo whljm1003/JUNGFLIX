@@ -8,8 +8,10 @@ import { useHistory, useRouteMatch } from "react-router-dom";
 import { AiOutlineDoubleRight } from "react-icons/ai";
 import Details from "../Components/details";
 const Wrapper = styled.div`
-  background: black;
+  background: ${(props) => props.theme.black.veryDark};
   padding-bottom: 200px;
+  overflow-x: hidden;
+  overflow-y: auto;
 `;
 
 const Loader = styled.div`
@@ -17,6 +19,7 @@ const Loader = styled.div`
   display: flex;
   justify-content: center;
   align-items: center;
+  margin: 10px 0;
 `;
 
 const Banner = styled.div<{ bgPhoto: string }>`
@@ -33,24 +36,26 @@ const Banner = styled.div<{ bgPhoto: string }>`
 const Title = styled.h2`
   font-size: 68px;
   margin-bottom: 20px;
+  font-weight: 400;
+  color: ${(props) => props.theme.white.darker};
 `;
 
 const Overview = styled.p`
-  font-size: 30px;
+  font-size: 35px;
   width: 50%;
+  color: ${(props) => props.theme.white.darker};
 `;
 
 const Slider = styled.div`
   position: relative;
-  top: -100px;
-
+  top: -120px;
   height: 35vh;
 `;
 
 const Row = styled(motion.div)`
   display: grid;
   gap: 5px;
-  grid-template-columns: repeat(6, 1fr);
+  grid-template-columns: repeat(7, 1fr);
   position: absolute;
   width: 100%;
 `;
@@ -65,7 +70,7 @@ const Box = styled(motion.div)<{ bgphoto: string }>`
   background-image: url(${(props) => props.bgphoto});
   background-size: cover;
   background-position: center center;
-  height: 200px;
+  height: 30vh;
   font-size: 66px;
   cursor: pointer;
   &:first-child {
@@ -106,13 +111,16 @@ const BigMovie = styled(motion.div)`
   right: 0;
   margin: 0 auto;
   border-radius: 15px;
-  overflow: hidden;
+  overflow: scroll;
   background-color: ${(props) => props.theme.black.lighter};
+  &::-webkit-scrollbar {
+    display: none;
+  }
 `;
 
 const NextBtn = styled.div`
-  width: 50px;
-  height: 200px;
+  width: 60px;
+  height: 30vh;
   background-color: rgba(0, 0, 0, 0.5);
   position: absolute;
   display: flex;
@@ -160,7 +168,7 @@ const infoVariants = {
     },
   },
 };
-const offset = 6;
+const offset = 7;
 
 function Tv() {
   const history = useHistory();
