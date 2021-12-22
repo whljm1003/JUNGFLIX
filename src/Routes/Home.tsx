@@ -33,23 +33,27 @@ const Banner = styled.div<{ bgPhoto: string }>`
 const Title = styled.h2`
   font-size: 68px;
   margin-bottom: 20px;
+  font-weight: 400;
+  color: ${(props) => props.theme.white.darker};
 `;
 
 const Overview = styled.p`
-  font-size: 30px;
+  font-size: 35px;
   width: 50%;
+  color: ${(props) => props.theme.white.darker};
 `;
 
 const Slider = styled.div`
   position: relative;
-  top: -100px;
-
+  top: -120px;
   height: 35vh;
+  /* padding-left: 60px; */
 `;
 
 const Row = styled(motion.div)`
   display: grid;
   gap: 5px;
+  border: 2px solid red;
   grid-template-columns: repeat(6, 1fr);
   position: absolute;
   width: 100%;
@@ -65,7 +69,7 @@ const Box = styled(motion.div)<{ bgphoto: string }>`
   background-image: url(${(props) => props.bgphoto});
   background-size: cover;
   background-position: center center;
-  height: 200px;
+  height: 30vh;
   font-size: 66px;
   cursor: pointer;
   &:first-child {
