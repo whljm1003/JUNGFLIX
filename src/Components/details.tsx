@@ -4,7 +4,6 @@ import { useRouteMatch } from "react-router-dom";
 import { getDetailsMovies, getDetailsTv, IDetail } from "../api";
 import { useQuery } from "react-query";
 import { makeImagePath } from "../utils";
-import { theme } from "../theme";
 
 const Loader = styled.div`
   height: 20vh;
@@ -17,22 +16,32 @@ const BigCover = styled.div`
   width: 100%;
   background-size: cover;
   background-position: center center;
-  height: 400px;
+  height: 50vh;
 `;
 
-const BigTitle = styled.h3`
+const BigTitle = styled.h4`
   color: ${(props) => props.theme.white.lighter};
   padding: 20px;
-  font-size: 46px;
+  font-size: 40px;
   position: relative;
-  top: -80px;
+  top: -110px;
+  font-weight: 400;
+  @media screen and (max-width: 1440px) {
+    font-size: 28px;
+    top: -70px;
+  }
 `;
 
 const BigOverview = styled.p`
+  margin-top: 20px;
   padding: 20px;
   position: relative;
-  top: -100px;
+  top: -80px;
   color: ${(props) => props.theme.white.lighter};
+  font-size: 40px;
+  @media screen and (max-width: 1440px) {
+    font-size: 25px;
+  }
 `;
 
 const DetailItems = styled.ul`
@@ -43,7 +52,7 @@ const DetailItems = styled.ul`
   justify-content: center;
   align-items: center;
   position: relative;
-  top: -120px;
+  bottom: 85px;
 `;
 
 const DetailItem = styled.li`

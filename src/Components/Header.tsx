@@ -40,14 +40,20 @@ const Items = styled.ul`
 
 const Item = styled.li`
   margin-right: 20px;
-  color: ${(props) => props.theme.white.darker};
+
   transition: color 0.3s ease-in-out;
   position: relative;
   display: flex;
   justify-content: center;
   flex-direction: column;
+
   &:hover {
     color: ${(props) => props.theme.white.lighter};
+  }
+  a {
+    font-size: 18px;
+    font-weight: 600;
+    color: ${(props) => props.theme.white.darker};
   }
 `;
 
@@ -83,8 +89,11 @@ const Input = styled(motion.input)`
   z-index: -1;
   color: white;
   font-size: 16px;
-  background-color: transparent;
-  border: 1px solid ${(props) => props.theme.white.lighter};
+  width: 270px;
+  height: 35px;
+  background-color: ${(props) => props.theme.black.lighter};
+  border: 1.3px solid ${(props) => props.theme.white.lighter};
+  border-radius: 5px;
 `;
 
 const logoVariants = {
@@ -173,7 +182,7 @@ function Header() {
         <Search onSubmit={handleSubmit(onValid)}>
           <motion.svg
             onClick={toggleSearch}
-            animate={{ x: searchOpen ? -185 : 0 }}
+            animate={{ x: searchOpen ? -235 : 0 }}
             transition={{ type: "linear" }}
             fill="currentColor"
             viewBox="0 0 20 20"
@@ -186,7 +195,7 @@ function Header() {
             ></path>
           </motion.svg>
           <Input
-            {...register("keyword", { required: true, minLength: 2 })}
+            {...register("keyword", { required: true, minLength: 3 })}
             animate={inputAnimation}
             initial={{ scaleX: 0 }}
             transition={{ type: "linear" }}

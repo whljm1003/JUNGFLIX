@@ -8,8 +8,10 @@ import { useHistory, useRouteMatch } from "react-router-dom";
 import { AiOutlineDoubleRight } from "react-icons/ai";
 import Details from "../Components/details";
 const Wrapper = styled.div`
-  background: black;
+  background: ${(props) => props.theme.black.veryDark};
   padding-bottom: 200px;
+  overflow-x: hidden;
+  overflow-y: auto;
 `;
 
 const Loader = styled.div`
@@ -47,14 +49,13 @@ const Slider = styled.div`
   position: relative;
   top: -120px;
   height: 35vh;
-  /* padding-left: 60px; */
+  margin: 10px 0;
 `;
 
 const Row = styled(motion.div)`
   display: grid;
   gap: 5px;
-  border: 2px solid red;
-  grid-template-columns: repeat(6, 1fr);
+  grid-template-columns: repeat(7, 1fr);
   position: absolute;
   width: 100%;
 `;
@@ -104,19 +105,22 @@ const Overlay = styled(motion.div)`
 
 const BigMovie = styled(motion.div)`
   position: absolute;
-  width: 40vw;
+  width: 45vw;
   height: 80vh;
   left: 0;
   right: 0;
   margin: 0 auto;
   border-radius: 15px;
-  overflow: hidden;
+  overflow: scroll;
   background-color: ${(props) => props.theme.black.lighter};
+  &::-webkit-scrollbar {
+    display: none;
+  }
 `;
 
 const NextBtn = styled.div`
-  width: 50px;
-  height: 200px;
+  width: 60px;
+  height: 30vh;
   background-color: rgba(0, 0, 0, 0.5);
   position: absolute;
   display: flex;
@@ -164,7 +168,7 @@ const infoVariants = {
     },
   },
 };
-const offset = 6;
+const offset = 7;
 
 function Home() {
   const history = useHistory();
