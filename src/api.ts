@@ -12,7 +12,7 @@ interface IMovie {
   backdrop_path: string;
   overview: string;
   poster_path: string;
-  title: string;
+  title?: string;
   release_date?: string;
   vote_average?: number;
   name?: string;
@@ -54,12 +54,12 @@ export interface IDetail {
   revenue: number;
   runtime: number;
   title: string;
+  name: string;
   vote_average: number;
-  vote_count: number;
   overview: string;
   genres: Igenres[];
   backdrop_path: string;
-  name: string;
+  first_air_date: string;
 }
 
 // search interface
@@ -71,59 +71,59 @@ export interface ISearchResult {
 //Movie
 export function getMovies() {
   return fetch(
-    `${BASE_PATH}/movie/popular?api_key=${API_KEY}&language=en-US-KR&page=1`
+    `${BASE_PATH}/movie/popular?api_key=${API_KEY}&language=ko-KR&page=1`
   ).then((response) => response.json());
 }
 export function topMovies() {
   return fetch(
-    `${BASE_PATH}/movie/top_rated?api_key=${API_KEY}&language=en-US`
+    `${BASE_PATH}/movie/top_rated?api_key=${API_KEY}&language=ko`
   ).then((response) => response.json());
 }
 export function upcomingMovie() {
   return fetch(
-    `${BASE_PATH}/movie/upcoming?api_key=${API_KEY}&language=en-US-KR&page=3`
+    `${BASE_PATH}/movie/upcoming?api_key=${API_KEY}&language=ko-KR&page=3`
   ).then((response) => response.json());
 }
 
 //Tv
 export function getOnTheAir() {
   return fetch(
-    `${BASE_PATH}/tv/on_the_air?api_key=${API_KEY}&language=en-US&page=3`
+    `${BASE_PATH}/tv/on_the_air?api_key=${API_KEY}&language=ko&page=3`
   ).then((response) => response.json());
 }
 export function getAiringToday() {
   return fetch(
-    `${BASE_PATH}/tv/airing_today?api_key=${API_KEY}&language=en-US`
+    `${BASE_PATH}/tv/airing_today?api_key=${API_KEY}&language=ko`
   ).then((response) => response.json());
 }
 export function getPopularTv() {
   return fetch(
-    `${BASE_PATH}/tv/popular?api_key=${API_KEY}&language=en-US&page=4`
+    `${BASE_PATH}/tv/popular?api_key=${API_KEY}&language=ko&page=4`
   ).then((response) => response.json());
 }
 export function getTop_ratedTv() {
   return fetch(
-    `${BASE_PATH}/tv/top_rated?api_key=${API_KEY}&language=en-US&page=1`
+    `${BASE_PATH}/tv/top_rated?api_key=${API_KEY}&language=ko&page=1`
   ).then((response) => response.json());
 }
 
 // details
 export function getDetailsMovies(movieId: string) {
   return fetch(
-    `${BASE_PATH}/movie/${movieId}?api_key=${API_KEY}&language=en-US&page=1`
+    `${BASE_PATH}/movie/${movieId}?api_key=${API_KEY}&language=ko&page=1`
   ).then((response) => response.json());
 }
 
 export function getDetailsTv(tvId: string) {
-  return fetch(
-    `${BASE_PATH}/tv/${tvId}?api_key=${API_KEY}&language=en-US`
-  ).then((response) => response.json());
+  return fetch(`${BASE_PATH}/tv/${tvId}?api_key=${API_KEY}&language=ko`).then(
+    (response) => response.json()
+  );
 }
 
 // search
 
 export function searchAll(keyword: string | null) {
   return fetch(
-    `${BASE_PATH}/search/multi?api_key=${API_KEY}&language=en-US&query=${keyword}`
+    `${BASE_PATH}/search/multi?api_key=${API_KEY}&language=ko&query=${keyword}`
   ).then((response) => response.json());
 }

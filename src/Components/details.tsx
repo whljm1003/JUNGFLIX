@@ -31,42 +31,42 @@ const BigTitle = styled.h4`
     top: -70px;
   }
 `;
+const Detailbody = styled.div`
+  display: flex;
+`;
 
-const BigOverview = styled.p`
-  margin-top: 20px;
+const BigOverview = styled.div`
   padding: 20px;
   position: relative;
   top: -80px;
+  width: 75%;
   color: ${(props) => props.theme.white.lighter};
-  font-size: 40px;
+  font-size: 35px;
   @media screen and (max-width: 1440px) {
-    font-size: 25px;
+    font-size: 23px;
   }
 `;
 
 const DetailItems = styled.ul`
-  width: 100%;
-  height: 50px;
-  margin-top: 20px;
   display: flex;
-  justify-content: center;
-  align-items: center;
+  flex-direction: column;
   position: relative;
-  bottom: 85px;
+  width: 25%;
+  margin-top: 20px;
+  top: -80px;
 `;
 
 const DetailItem = styled.li`
-  width: 30%;
-  height: 100%;
   display: flex;
-  justify-content: center;
   align-items: center;
-  font-size: 20px;
-  font-weight: 500;
-  margin: 0 5px;
-  color: ${(props) => props.theme.white.lighter};
-  border: 2px solid ${(props) => props.theme.white.darker};
+  height: 40px;
+  font-size: 16px;
+  font-weight: 350;
+  color: ${(props) => props.theme.white.darker};
+  border: 1px solid ${(props) => props.theme.white.darker};
   border-radius: 13px;
+  margin-bottom: 10px;
+  padding-left: 5px;
 `;
 
 function Details() {
@@ -95,15 +95,29 @@ function Details() {
                   )})`,
                 }}
               />
-
               <BigTitle>{data.name || data.title}</BigTitle>
-              <BigOverview>{data.overview}</BigOverview>
-              <DetailItems>
-                <DetailItem>{data.release_date}</DetailItem>
-                <DetailItem>{`runtime ${data.runtime}`}</DetailItem>
-                <DetailItem>{`average ${data.vote_average}`}</DetailItem>
-                <DetailItem>{`count ${data.vote_count}`}</DetailItem>
-              </DetailItems>
+              <Detailbody>
+                <BigOverview>{data.overview || "no story line"}</BigOverview>
+                <DetailItems>
+                  <DetailItem>
+                    {`개봉 연도: ${
+                      data.release_date?.slice(0, 4) ||
+                      data.first_air_date?.slice(0, 4)
+                    }`}
+                  </DetailItem>
+                  <DetailItem>{`런타임: ${data.runtime || ""} min`}</DetailItem>
+                  {Math.ceil(data.vote_average) > 8 ? (
+                    <DetailItem>평점: ⭐️⭐️⭐️⭐️⭐️</DetailItem>
+                  ) : Math.ceil(data.vote_average) > 5 ? (
+                    <DetailItem>평점: ⭐️⭐️⭐️⭐️</DetailItem>
+                  ) : (
+                    <DetailItem>평점: ⭐️⭐️⭐️</DetailItem>
+                  )}
+                  <DetailItem>{`장르: ${data.genres
+                    .slice(0, 2)
+                    .map((e) => e.name)}`}</DetailItem>
+                </DetailItems>
+              </Detailbody>
             </>
           )}
         </AnimatePresence>
