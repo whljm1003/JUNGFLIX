@@ -63,7 +63,6 @@ export interface IDetail {
 }
 
 // search interface
-
 export interface ISearchResult {
   page: number;
   results: IMovie[];
@@ -87,7 +86,12 @@ export function upcomingMovie() {
 }
 
 //Tv
-export function getTv() {
+export function getOnTheAir() {
+  return fetch(
+    `${BASE_PATH}/tv/on_the_air?api_key=${API_KEY}&language=en-US&page=3`
+  ).then((response) => response.json());
+}
+export function getAiringToday() {
   return fetch(
     `${BASE_PATH}/tv/airing_today?api_key=${API_KEY}&language=en-US`
   ).then((response) => response.json());

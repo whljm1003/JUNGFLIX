@@ -2,11 +2,9 @@
 
 ### Using:
 
-- Styled Components
-- Recoil
+- Typescript
+- React
 - React Query
 - React Router DOM
-- Apex Charts
-- React Spring
-- Typescript
-- Firebase
+- Styled Components
+- framer motion

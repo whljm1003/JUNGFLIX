@@ -14,7 +14,7 @@ const Loader = styled.div`
 
 const BigCover = styled.div`
   width: 100%;
-  background-size: cover;
+  background-size: 100% 100%;
   background-position: center center;
   height: 50vh;
 `;
