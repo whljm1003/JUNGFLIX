@@ -1,7 +1,119 @@
+// import { AnimatePresence, motion } from "framer-motion";
+// import { useQuery } from "react-query";
+// import { IGetSearch, getSearch } from "../api";
+// import { useLocation, useHistory } from "react-router-dom";
+// import {
+//   Wrapper,
+//   Loader,
+//   Banner,
+//   Title,
+//   Overview,
+//   Slider,
+//   RowTitle,
+//   Row,
+//   Box,
+//   Info,
+//   NextBtn,
+//   Overlay,
+//   BigMovie,
+//   rowVariants,
+//   boxVariants,
+//   infoVariants,
+// } from "./layout";
+// import { makeImagePath } from "../utils";
+// import { useState } from "react";
+// import styled from "styled-components";
+
+// const SearchTitle = styled.h2`
+//   font-weight: 500;
+//   font-size: 27px;
+//   margin-top: 90px;
+// `;
+// const SearchRow = styled(motion.div)`
+//   display: grid;
+//   grid-template-columns: repeat(7, 1fr);
+//   gap: 5px;
+// `;
+
+// interface SearchProps {
+//   search: string;
+// }
+// function Search() {
+//   const location = useLocation() as SearchProps;
+//   const keyword = new URLSearchParams(location.search).get("keyword");
+//   const [leaving, setLeaving] = useState(false);
+//   const { data, isLoading } = useQuery<IGetSearch>("Search", () =>
+//     getSearch(keyword)
+//   );
+//   console.log(data);
+//   const toggleLeaving = () => setLeaving((prev) => !prev);
+//   return (
+//     <Wrapper>
+//       {isLoading ? (
+//         <Loader>Loading...</Loader>
+//       ) : (
+//         <>
+//           <Banner
+//             bgPhoto={makeImagePath(data?.results[0].backdrop_path || "")}
+//           />
+//           <AnimatePresence initial={false} onExitComplete={toggleLeaving}>
+//             <SearchTitle>Search Movie</SearchTitle>
+
+//             <SearchRow>
+//               {data?.results.map(
+//                 (search) =>
+//                   search.media_type === "movie" && (
+//                     <Box
+//                       layoutId={search.id + ""}
+//                       key={search.id}
+//                       variants={boxVariants}
+//                       whileHover="hover"
+//                       initial="nomal"
+//                       // onClick={() => onBoxClicked(search.id)}
+//                       transition={{ type: "tween" }}
+//                       bgphoto={makeImagePath(search.backdrop_path, "w500")}
+//                     >
+//                       <Info variants={infoVariants}>
+//                         <h4>{search.title}</h4>
+//                       </Info>
+//                     </Box>
+//                   )
+//               )}
+//             </SearchRow>
+//             <SearchTitle>Search Tv</SearchTitle>
+//             <SearchRow>
+//               {data?.results.map(
+//                 (search) =>
+//                   search.media_type === "tv" && (
+//                     <Box
+//                       layoutId={search.id + ""}
+//                       key={search.id}
+//                       variants={boxVariants}
+//                       whileHover="hover"
+//                       initial="nomal"
+//                       // onClick={() => onBoxClicked(search.id)}
+//                       transition={{ type: "tween" }}
+//                       bgphoto={makeImagePath(search.backdrop_path, "w500")}
+//                     >
+//                       <Info variants={infoVariants}>
+//                         <h4>{search.name}</h4>
+//                       </Info>
+//                     </Box>
+//                   )
+//               )}
+//             </SearchRow>
+//           </AnimatePresence>
+//         </>
+//       )}
+//     </Wrapper>
+//   );
+// }
+
+// export default Search;
 import { useQuery } from "react-query";
 import { useLocation, useHistory, useRouteMatch } from "react-router-dom";
 import styled from "styled-components";
-import { ISearchResult, searchAll } from "../api";
+import { IGetSearch, getSearch } from "../api";
 import { makeImagePath } from "../utils";
 import { AnimatePresence, motion, useViewportScroll } from "framer-motion";
 import Detail from "../Components/details";
@@ -26,9 +138,9 @@ const BoxContainer = styled.div`
   padding: 60px;
   gap: 10px;
 `;
-const Box = styled(motion.div)<{ bgPhoto: string }>`
+const Box = styled(motion.div)<{ bgphoto: string }>`
   height: 200px;
-  background-image: url(${(props) => props.bgPhoto});
+  background-image: url(${(props) => props.bgphoto});
   background-size: cover;
   background-position: center center;
   margin-bottom: 20px;
@@ -60,7 +172,6 @@ const Info = styled(motion.div)`
   position: absolute;
   width: 100%;
   bottom: 0;
-
   h4 {
     text-align: center;
     font-size: 14px;
@@ -126,8 +237,8 @@ const Search = () => {
   );
   const tvMatch = useRouteMatch<{ tvId: string }>(`/search/tv/:tvId`);
   const { scrollY } = useViewportScroll();
-  const { data, isLoading } = useQuery<ISearchResult>(["search", keyword], () =>
-    searchAll(keyword)
+  const { data, isLoading } = useQuery<IGetSearch>(["search", keyword], () =>
+    getSearch(keyword)
   );
   const onClickBox = (mediaType: string, searchId: number) => {
     if (mediaType === "movie") {
@@ -162,7 +273,7 @@ const Search = () => {
                     onClick={() => {
                       onClickBox(search.media_type, search.id);
                     }}
-                    bgPhoto={
+                    bgphoto={
                       search.backdrop_path
                         ? makeImagePath(search.backdrop_path, "w500")
                         : makeImagePath(search.poster_path, "w500")
@@ -193,7 +304,7 @@ const Search = () => {
                     onClick={() => {
                       onClickBox(search.media_type, search.id);
                     }}
-                    bgPhoto={
+                    bgphoto={
                       search.backdrop_path
                         ? makeImagePath(search.backdrop_path, "w500")
                         : makeImagePath(search.poster_path, "w500")

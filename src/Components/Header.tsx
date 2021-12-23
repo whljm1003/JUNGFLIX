@@ -170,7 +170,7 @@ function Header() {
         <Items>
           <Item>
             <Link to="/">
-              Home {homeMathch?.isExact && <Circle layoutId="circle" />}
+              Movie {homeMathch?.isExact && <Circle layoutId="circle" />}
             </Link>
           </Item>
           <Item>
