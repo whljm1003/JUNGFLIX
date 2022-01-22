@@ -1,0 +1,11 @@
+{
+  "files": {
+    "main.js": "/Jungflix/static/js/main.f5108ea0.js",
+    "static/media/noPhoto.png": "/Jungflix/static/media/noPhoto.e6937a8d881b8289abde.png",
+    "index.html": "/Jungflix/index.html",
+    "main.f5108ea0.js.map": "/Jungflix/static/js/main.f5108ea0.js.map"
+  },
+  "entrypoints": [
+    "static/js/main.f5108ea0.js"
+  ]
+}
