@@ -11,7 +11,6 @@ const Nav = styled(motion.nav)`
   position: fixed;
   width: 100%;
   top: 0;
-  background-color: black;
   font-size: 14px;
   padding: 20px 60px;
   color: white;
@@ -40,20 +39,14 @@ const Items = styled.ul`
 
 const Item = styled.li`
   margin-right: 20px;
-
+  color: ${(props) => props.theme.white.darker};
   transition: color 0.3s ease-in-out;
   position: relative;
   display: flex;
   justify-content: center;
   flex-direction: column;
-
   &:hover {
     color: ${(props) => props.theme.white.lighter};
-  }
-  a {
-    font-size: 18px;
-    font-weight: 600;
-    color: ${(props) => props.theme.white.darker};
   }
 `;
 
@@ -71,9 +64,8 @@ const Circle = styled(motion.span)`
   position: absolute;
   width: 5px;
   height: 5px;
-  border-radius: 5px;
+  border-radius: 2.5px;
   bottom: -5px;
-  /* left,right: 0 , margin: 0 auto =>부모: relative 자식: absolute 가운데 정렬 */
   left: 0;
   right: 0;
   margin: 0 auto;
@@ -89,21 +81,17 @@ const Input = styled(motion.input)`
   z-index: -1;
   color: white;
   font-size: 16px;
-  width: 270px;
-  height: 35px;
-  background-color: ${(props) => props.theme.black.lighter};
-  border: 1.3px solid ${(props) => props.theme.white.lighter};
-  border-radius: 5px;
+  background-color: transparent;
+  border: 1px solid ${(props) => props.theme.white.lighter};
 `;
 
 const logoVariants = {
-  nomal: {
+  normal: {
     fillOpacity: 1,
   },
   active: {
-    // 배열로 해주면 배열 내부에 있는 걸 반복함
     fillOpacity: [0, 1, 0],
-    transiton: {
+    transition: {
       repeat: Infinity,
     },
   },
@@ -122,18 +110,13 @@ interface IForm {
   keyword: string;
 }
 
-function Header() {
+function HeaderCompo() {
   const [searchOpen, setSearchOpen] = useState(false);
-  const homeMathch = useRouteMatch("/");
-  const tvMathch = useRouteMatch("/tv");
+  const homeMatch = useRouteMatch("/");
+  const tvMatch = useRouteMatch("/tv");
   const inputAnimation = useAnimation();
   const navAnimation = useAnimation();
   const { scrollY } = useViewportScroll();
-  const history = useHistory();
-  const { register, handleSubmit } = useForm<IForm>();
-  const onValid = (data: IForm) => {
-    history.push(`/search?keyword=${data.keyword}`);
-  };
   const toggleSearch = () => {
     if (searchOpen) {
       inputAnimation.start({
@@ -153,13 +136,18 @@ function Header() {
       }
     });
   }, [scrollY, navAnimation]);
+  const history = useHistory();
+  const { register, handleSubmit } = useForm<IForm>();
+  const onValid = (data: IForm) => {
+    history.push(`/search?keyword=${data.keyword}`);
+  };
   return (
     <Nav variants={navVariants} animate={navAnimation} initial={"top"}>
       <Col>
         <Logo
           variants={logoVariants}
           whileHover="active"
-          animate="nomal"
+          animate="normal"
           xmlns="http://www.w3.org/2000/svg"
           width="1024"
           height="276.742"
@@ -170,11 +158,13 @@ function Header() {
         <Items>
           <Item>
             <Link to="/">
-              Movie {homeMathch?.isExact && <Circle layoutId="circle" />}
+              Home {homeMatch?.isExact && <Circle layoutId="circle" />}
             </Link>
           </Item>
           <Item>
-            <Link to="/tv">Tv {tvMathch && <Circle layoutId="circle" />}</Link>
+            <Link to="/tv">
+              Tv Shows {tvMatch && <Circle layoutId="circle" />}
+            </Link>
           </Item>
         </Items>
       </Col>
@@ -182,7 +172,7 @@ function Header() {
         <Search onSubmit={handleSubmit(onValid)}>
           <motion.svg
             onClick={toggleSearch}
-            animate={{ x: searchOpen ? -235 : 0 }}
+            animate={{ x: searchOpen ? -185 : 0 }}
             transition={{ type: "linear" }}
             fill="currentColor"
             viewBox="0 0 20 20"
@@ -195,7 +185,7 @@ function Header() {
             ></path>
           </motion.svg>
           <Input
-            {...register("keyword", { required: true, minLength: 3 })}
+            {...register("keyword", { required: true, minLength: 2 })}
             animate={inputAnimation}
             initial={{ scaleX: 0 }}
             transition={{ type: "linear" }}
@@ -206,4 +196,5 @@ function Header() {
     </Nav>
   );
 }
-export default Header;
+
+export default HeaderCompo;

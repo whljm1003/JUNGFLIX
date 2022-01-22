@@ -54,6 +54,7 @@ const DetailItems = styled.ul`
   width: 25%;
   margin-top: 20px;
   top: -80px;
+  right: 10px;
 `;
 
 const DetailItem = styled.li`
@@ -62,21 +63,25 @@ const DetailItem = styled.li`
   height: 40px;
   font-size: 16px;
   font-weight: 350;
-  color: ${(props) => props.theme.white.darker};
+  color: ${(props) => props.theme.white.veryDark};
   border: 1px solid ${(props) => props.theme.white.darker};
   border-radius: 13px;
   margin-bottom: 10px;
   padding-left: 5px;
 `;
 
-function Details() {
-  const bigMoviesMatch = useRouteMatch<{ movieId: string }>("/movies/:movieId");
-  const bigtvMatch = useRouteMatch<{ movieId: string }>("/tv/:movieId");
+const Context = styled.p`
+  color: ${(props) => props.theme.white.lighter};
+`;
 
-  const { data, isLoading } = useQuery<IDetail>(["tv"], () =>
+function DetailsCompo() {
+  const bigMoviesMatch = useRouteMatch<{ movieId: string }>("/movies/:movieId");
+  const bigtvMatch = useRouteMatch<{ tvId: string }>("/tv/:tvId");
+
+  const { data, isLoading } = useQuery<IDetail>(["serarch/tv", "movies"], () =>
     bigMoviesMatch?.params.movieId
       ? getDetailsMovies(bigMoviesMatch?.params.movieId as string)
-      : getDetailsTv(bigtvMatch?.params.movieId as string)
+      : getDetailsTv(bigtvMatch?.params.tvId as string)
   );
 
   return (
@@ -100,22 +105,33 @@ function Details() {
                 <BigOverview>{data.overview || "no story line"}</BigOverview>
                 <DetailItems>
                   <DetailItem>
-                    {`개봉 연도: ${
-                      data.release_date?.slice(0, 4) ||
-                      data.first_air_date?.slice(0, 4)
-                    }`}
+                    release:&nbsp;
+                    <Context>
+                      {data.release_date?.slice(0, 4) ||
+                        data.first_air_date?.slice(0, 4)}
+                    </Context>
                   </DetailItem>
-                  <DetailItem>{`런타임: ${data.runtime || ""} min`}</DetailItem>
+                  <DetailItem>
+                    runtime:&nbsp;
+                    <Context>{`${data.runtime || ""} min`}</Context>
+                  </DetailItem>
                   {Math.ceil(data.vote_average) > 8 ? (
-                    <DetailItem>평점: ⭐️⭐️⭐️⭐️⭐️</DetailItem>
-                  ) : Math.ceil(data.vote_average) > 5 ? (
-                    <DetailItem>평점: ⭐️⭐️⭐️⭐️</DetailItem>
+                    <DetailItem>grade: ⭐️⭐️⭐️⭐️⭐️</DetailItem>
+                  ) : Math.ceil(data.vote_average) > 6 ? (
+                    <DetailItem>grade: ⭐️⭐️⭐️⭐️</DetailItem>
+                  ) : Math.ceil(data.vote_average) > 4 ? (
+                    <DetailItem>grade: ⭐️⭐️⭐️</DetailItem>
+                  ) : Math.ceil(data.vote_average) > 2 ? (
+                    <DetailItem>grade: ⭐️⭐️</DetailItem>
                   ) : (
-                    <DetailItem>평점: ⭐️⭐️⭐️</DetailItem>
+                    <DetailItem>grade: ⭐️</DetailItem>
                   )}
-                  <DetailItem>{`장르: ${data.genres
-                    .slice(0, 2)
-                    .map((e) => e.name)}`}</DetailItem>
+                  <DetailItem>
+                    genre&nbsp;
+                    <Context>
+                      {data.genres.slice(0, 2).map((e) => e.name)}
+                    </Context>
+                  </DetailItem>
                 </DetailItems>
               </Detailbody>
             </>
@@ -127,4 +143,4 @@ function Details() {
   );
 }
 
-export default Details;
+export default DetailsCompo;
