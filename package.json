@@ -57,7 +57,7 @@
     "@types/react-helmet": "^6.1.5",
     "@types/react-router-dom": "^5.3.2",
     "@types/styled-components": "^5.1.18",
-    "follow-redirects": ">=1.14.7",
+    "follow-redirects": ">=1.14.8",
     "node-forge": ">=1.0.0"
   },
   "homepage": "https://whljm1003.github.io/Jungflix"
