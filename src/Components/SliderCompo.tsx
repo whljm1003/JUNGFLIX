@@ -13,14 +13,14 @@ import {
   Slider,
 } from "../Routes/layout";
 import { makeImagePath } from "../utils";
-import { useHistory } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 
 const offset = 7;
 
 const SliderCompo: React.FC<any> = ({ data, title }) => {
   const [latestIndex, setLatestIndex] = useState(0);
   const [leaving, setLeaving] = useState(false);
-  const history = useHistory();
+  const navigate = useNavigate();
   const toggleLeaving = () => setLeaving((prev) => !prev);
 
   const Increase = () => {
@@ -35,9 +35,9 @@ const SliderCompo: React.FC<any> = ({ data, title }) => {
   const onBoxClicked = (movie: any) => {
     const { id, title } = movie;
     if (title) {
-      history.push(`/movies/${id}`);
+      navigate(`/movies/${id}`);
     } else {
-      history.push(`/tv/${id}`);
+      navigate(`/tv/${id}`);
     }
   };
 

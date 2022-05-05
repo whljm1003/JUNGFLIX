@@ -7,15 +7,15 @@ import {
   getPopularTv,
   getTop_ratedTv,
 } from "../api";
-import { useHistory, useRouteMatch } from "react-router-dom";
+import { useNavigate, useMatch } from "react-router-dom";
 import { Wrapper, Loader, Overlay, BigMovie } from "./layout";
 import DetailsCompo from "../Components/DetailsCompo";
 import BannerCompo from "../Components/BannerCompo";
 import SliderCompo from "../Components/SliderCompo";
 
 function Tv() {
-  const history = useHistory();
-  const bigtvMatch = useRouteMatch<{ movieId: string }>("/tv/:tvId");
+  const navigate = useNavigate();
+  const bigtvMatch = useMatch("/tv/:tvId");
   const { scrollY } = useViewportScroll();
   const { data: onTheAir, isLoading: onTheAirLoading } = useQuery<IgetTv>(
     ["tv", "onTheAir"],
@@ -34,7 +34,7 @@ function Tv() {
     getTop_ratedTv
   );
 
-  const onOverlayClick = () => history.push("/tv");
+  const onOverlayClick = () => navigate("/tv");
 
   const loading =
     onTheAirLoading || TodayLoading || TopLoading || PopularLoading;
@@ -61,7 +61,7 @@ function Tv() {
                 />
                 <BigMovie
                   style={{ top: scrollY.get() + 100 }}
-                  layoutId={bigtvMatch.params.movieId}
+                  layoutId={bigtvMatch.params.tvId}
                 >
                   <DetailsCompo />
                 </BigMovie>

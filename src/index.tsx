@@ -1,5 +1,5 @@
 import React from "react";
-import ReactDOM from "react-dom";
+import ReactDOM from "react-dom/client";
 import { RecoilRoot } from "recoil";
 import { ThemeProvider } from "styled-components";
 import App from "./App";
@@ -20,7 +20,7 @@ fieldset, form, label, legend,
 table, caption, tbody, tfoot, thead, tr, th, td,
 article, aside, canvas, details, embed,
 figure, figcaption, footer, header, hgroup,
-main, menu, nav, output, ruby, section, summary,
+main, menu, nav, output, ruby, section, summary, 
 time, mark, audio, video {
   margin: 0;
   padding: 0;
@@ -74,7 +74,9 @@ a {
 
 const client = new QueryClient();
 
-ReactDOM.render(
+const rootNode = document.getElementById("root")!;
+
+ReactDOM.createRoot(rootNode).render(
   <React.StrictMode>
     <RecoilRoot>
       <QueryClientProvider client={client}>
@@ -84,6 +86,5 @@ ReactDOM.render(
         </ThemeProvider>
       </QueryClientProvider>
     </RecoilRoot>
-  </React.StrictMode>,
-  document.getElementById("root")
+  </React.StrictMode>
 );

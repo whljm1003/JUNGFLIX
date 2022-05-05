@@ -1,110 +1,8 @@
-import { Link, useRouteMatch, useHistory } from "react-router-dom";
+import { Link, useMatch, useNavigate } from "react-router-dom";
 import styled from "styled-components";
 import { motion, useAnimation, useViewportScroll } from "framer-motion";
 import { useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
-
-const Nav = styled(motion.nav)`
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  position: fixed;
-  width: 100%;
-  top: 0;
-  font-size: 14px;
-  padding: 20px 60px;
-  color: white;
-`;
-
-const Col = styled.div`
-  display: flex;
-  align-items: center;
-`;
-
-const Logo = styled(motion.svg)`
-  margin-right: 50px;
-  width: 95px;
-  height: 25px;
-  fill: ${(props) => props.theme.red};
-  path {
-    stroke-width: 6px;
-    stroke: white;
-  }
-`;
-
-const Items = styled.ul`
-  display: flex;
-  align-items: center;
-`;
-
-const Item = styled.li`
-  margin-right: 20px;
-  color: ${(props) => props.theme.white.darker};
-  transition: color 0.3s ease-in-out;
-  position: relative;
-  display: flex;
-  justify-content: center;
-  flex-direction: column;
-  &:hover {
-    color: ${(props) => props.theme.white.lighter};
-  }
-`;
-
-const Search = styled.form`
-  color: white;
-  display: flex;
-  align-items: center;
-  position: relative;
-  svg {
-    height: 25px;
-  }
-`;
-
-const Circle = styled(motion.span)`
-  position: absolute;
-  width: 5px;
-  height: 5px;
-  border-radius: 2.5px;
-  bottom: -5px;
-  left: 0;
-  right: 0;
-  margin: 0 auto;
-  background-color: ${(props) => props.theme.red};
-`;
-
-const Input = styled(motion.input)`
-  transform-origin: right center;
-  position: absolute;
-  right: 0px;
-  padding: 5px 10px;
-  padding-left: 40px;
-  z-index: -1;
-  color: white;
-  font-size: 16px;
-  background-color: transparent;
-  border: 1px solid ${(props) => props.theme.white.lighter};
-`;
-
-const logoVariants = {
-  normal: {
-    fillOpacity: 1,
-  },
-  active: {
-    fillOpacity: [0, 1, 0],
-    transition: {
-      repeat: Infinity,
-    },
-  },
-};
-
-const navVariants = {
-  top: {
-    backgroundColor: "rgba(0, 0, 0, 0)",
-  },
-  scroll: {
-    backgroundColor: "rgba(0, 0, 0, 1)",
-  },
-};
 
 interface IForm {
   keyword: string;
@@ -112,8 +10,8 @@ interface IForm {
 
 function HeaderCompo() {
   const [searchOpen, setSearchOpen] = useState(false);
-  const homeMatch = useRouteMatch("/");
-  const tvMatch = useRouteMatch("/tv");
+  const homeMatch = useMatch("/");
+  const tvMatch = useMatch("/tv");
   const inputAnimation = useAnimation();
   const navAnimation = useAnimation();
   const { scrollY } = useViewportScroll();
@@ -136,10 +34,10 @@ function HeaderCompo() {
       }
     });
   }, [scrollY, navAnimation]);
-  const history = useHistory();
+  const navigate = useNavigate();
   const { register, handleSubmit } = useForm<IForm>();
   const onValid = (data: IForm) => {
-    history.push(`/search?keyword=${data.keyword}`);
+    navigate(`/search?keyword=${data.keyword}`);
   };
   return (
     <Nav variants={navVariants} animate={navAnimation} initial={"top"}>
@@ -157,9 +55,7 @@ function HeaderCompo() {
         </Logo>
         <Items>
           <Item>
-            <Link to="/">
-              Home {homeMatch?.isExact && <Circle layoutId="circle" />}
-            </Link>
+            <Link to="/">Home {homeMatch && <Circle layoutId="circle" />}</Link>
           </Item>
           <Item>
             <Link to="/tv">
@@ -198,3 +94,96 @@ function HeaderCompo() {
 }
 
 export default HeaderCompo;
+
+const Nav = styled(motion.nav)`
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  position: fixed;
+  width: 100%;
+  top: 0;
+  font-size: 14px;
+  padding: 20px 60px;
+  color: white;
+`;
+const Col = styled.div`
+  display: flex;
+  align-items: center;
+`;
+const Logo = styled(motion.svg)`
+  margin-right: 50px;
+  width: 95px;
+  height: 25px;
+  fill: ${(props) => props.theme.red};
+  path {
+    stroke-width: 6px;
+    stroke: white;
+  }
+`;
+const Items = styled.ul`
+  display: flex;
+  align-items: center;
+`;
+const Item = styled.li`
+  margin-right: 20px;
+  color: ${(props) => props.theme.white.darker};
+  transition: color 0.3s ease-in-out;
+  position: relative;
+  display: flex;
+  justify-content: center;
+  flex-direction: column;
+  &:hover {
+    color: ${(props) => props.theme.white.lighter};
+  }
+`;
+const Search = styled.form`
+  color: white;
+  display: flex;
+  align-items: center;
+  position: relative;
+  svg {
+    height: 25px;
+  }
+`;
+const Circle = styled(motion.span)`
+  position: absolute;
+  width: 5px;
+  height: 5px;
+  border-radius: 2.5px;
+  bottom: -5px;
+  left: 0;
+  right: 0;
+  margin: 0 auto;
+  background-color: ${(props) => props.theme.red};
+`;
+const Input = styled(motion.input)`
+  transform-origin: right center;
+  position: absolute;
+  right: 0px;
+  padding: 5px 10px;
+  padding-left: 40px;
+  z-index: -1;
+  color: white;
+  font-size: 16px;
+  background-color: transparent;
+  border: 1px solid ${(props) => props.theme.white.lighter};
+`;
+const logoVariants = {
+  normal: {
+    fillOpacity: 1,
+  },
+  active: {
+    fillOpacity: [0, 1, 0],
+    transition: {
+      repeat: Infinity,
+    },
+  },
+};
+const navVariants = {
+  top: {
+    backgroundColor: "rgba(0, 0, 0, 0)",
+  },
+  scroll: {
+    backgroundColor: "rgba(0, 0, 0, 1)",
+  },
+};

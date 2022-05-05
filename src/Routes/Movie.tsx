@@ -1,15 +1,15 @@
 import { useQuery } from "react-query";
 import { AnimatePresence, useViewportScroll } from "framer-motion";
 import { getMovies, IGetMovies, topMovies, upcomingMovie } from "../api";
-import { useHistory, useRouteMatch } from "react-router-dom";
+import { useNavigate, useMatch } from "react-router-dom";
 import { Wrapper, Loader, Overlay, BigMovie } from "./layout";
 import DetailsCompo from "../Components/DetailsCompo";
 import BannerCompo from "../Components/BannerCompo";
 import SliderCompo from "../Components/SliderCompo";
 
 function Home() {
-  const history = useHistory();
-  const bigMovieMatch = useRouteMatch<{ movieId: string }>("/movies/:movieId");
+  const navigate = useNavigate();
+  const bigMovieMatch = useMatch("/movies/:movieId");
 
   const { scrollY } = useViewportScroll();
   const { data: latestData, isLoading: latestLoading } = useQuery<IGetMovies>(
@@ -23,7 +23,7 @@ function Home() {
   const { data: UpcomingData, isLoading: upcomingLoading } =
     useQuery<IGetMovies>(["movies", "upcomingMovie"], upcomingMovie);
 
-  const onOverlayClick = () => history.push("/");
+  const onOverlayClick = () => navigate("/");
 
   const loading = latestLoading || topLoading || upcomingLoading;
   return (

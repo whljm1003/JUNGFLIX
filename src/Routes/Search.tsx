@@ -1,7 +1,7 @@
 import { AnimatePresence, useViewportScroll } from "framer-motion";
 import { useQuery } from "react-query";
 import { useLocation } from "react-router";
-import { useHistory, useRouteMatch } from "react-router-dom";
+import { useNavigate, useMatch } from "react-router-dom";
 import { getSearch, IGetSearch } from "../api";
 import BannerCompo from "../Components/BannerCompo";
 import DetailsCompo from "../Components/DetailsCompo";
@@ -9,17 +9,16 @@ import SliderCompo from "../Components/SliderCompo";
 import { BigMovie, Loader, Overlay, Wrapper } from "./layout";
 
 function Search() {
-  const history = useHistory();
+  const navigate = useNavigate();
   const location = useLocation();
   const { scrollY } = useViewportScroll();
   const keyword = new URLSearchParams(location.search).get("keyword");
-  const SearchMovieMatch =
-    useRouteMatch<{ movieId: string }>("/search/:movieId");
+  const SearchMovieMatch = useMatch("/search/:movieId");
 
   const { data, isLoading } = useQuery<IGetSearch>("search", () =>
     getSearch(keyword)
   );
-  const onOverlayClick = () => history.push("/search");
+  const onOverlayClick = () => navigate("/search");
 
   return (
     <Wrapper>
